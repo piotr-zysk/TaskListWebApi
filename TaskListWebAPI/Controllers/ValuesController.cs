@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TaskListWebAPI.Model;
 using TaskListWebAPI.Repositories;
 
 namespace TaskListWebAPI.Controllers
 {
+    [EnableCors("SiteCorsPolicy")]
     [Route("api")]
-    [ApiController]
+    [ApiController]  
     public class ValuesController : ControllerBase
     {
         private ITaskRepository _taskRepository;
