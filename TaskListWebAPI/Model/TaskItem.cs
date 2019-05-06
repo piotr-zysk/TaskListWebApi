@@ -9,7 +9,7 @@ namespace TaskListWebAPI.Model
 
         [MaxLength(50)]
         public string name { get; set; }
-        public string nescription { get; set; }
+        public string description { get; set; }
         public bool done { get; set; }
     }
 }
