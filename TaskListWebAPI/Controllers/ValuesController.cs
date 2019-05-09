@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TaskListWebAPI.Model;
 using TaskListWebAPI.Repositories;
+using System.Web.Http;
 
 namespace TaskListWebAPI.Controllers
 {
@@ -37,20 +38,46 @@ namespace TaskListWebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] TaskItem value)
         {
+            if (!ModelState.IsValid)
+            {
+                string errorMessages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
+                return BadRequest(errorMessages);
+            }
+
+            _taskRepository.Add(value);
+            
+            return Created("", value);  //dodaj uri                    
+            //return StatusCode((int)System.Net.HttpStatusCode.InternalServerError);
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] TaskItem value)
         {
+            if (!ModelState.IsValid)
+            {
+                string errorMessages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
+                return BadRequest(errorMessages);
+            }
+
+            _taskRepository.Update(value);
+
+            return Ok(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _taskRepository.Delete(id);
         }
     }
 }

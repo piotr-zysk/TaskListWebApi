@@ -10,8 +10,9 @@ namespace TaskListWebAPI.Repositories
     {
         IEnumerable<TaskItem> GetAll();
         TaskItem Get(int id);
-        void AddTask(TaskItem taskItem);
-        void UpdateTask(TaskItem taskItem);
+        void Add(TaskItem taskItem);
+        void Update(TaskItem taskItem);
+        void Delete(int id);
 
     }
 }
